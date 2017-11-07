@@ -17,17 +17,17 @@ function getRepoContributors(repoOwner, repoName, callback){
     }
     var userData = callback(JSON.parse(body));
     userData.forEach(function(element){
-      console.log('avatar_url: ', callback(element.avatar_url));
+      downloadImageByUrl(element.avatar_url, folderPath + element.login + '.jpg');
     })
 
   });
 
 }
 
-+function downloadImageByURL(url, filePath) {
- +  request(url)
- +    .pipe(fs.createWriteStream(filePath));
- +}
+function downloadImageByURL(url, filePath) {
+   request(url)
+     .pipe(fs.createWriteStream(filePath));
+ }
 
 
 
