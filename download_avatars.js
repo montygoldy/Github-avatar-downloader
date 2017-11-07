@@ -1,4 +1,4 @@
-var secrets = require('./secret'); // Requiring secret module containing key
+require('dotenv').config()
 var request = require('request'); // Request module
 var fs = require('fs'); // Create write stream is available to use now
 
@@ -11,7 +11,9 @@ var repoName = arg[1];
 // Condition to required arguments
 
 if(!repoOwner || !repoName){
+
   console.log("Please enter Repo owner and Repo name");
+
 }else{
 
   function getRepoContributors(repoOwner, repoName, callback){
@@ -19,7 +21,7 @@ if(!repoOwner || !repoName){
       url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
       headers: {
         'User-Agent': 'request',
-        'Authorization': 'token ' + secrets.GITHUB_TOKEN
+        'Authorization': 'token ' + process.env.GITHUB_TOKEN
       }
     }
 
