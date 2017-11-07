@@ -42,8 +42,7 @@ function downloadImageByURL(url, filePath) {
 
 function callback_function (userData) {
   userData.forEach(function(element){
-
-      console.log(element.avatar_url);
+    downloadImageByURL(element.avatar_url, './avatars/' + element.login + '.jpg');
   })
 }
 
