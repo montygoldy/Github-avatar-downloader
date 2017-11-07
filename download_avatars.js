@@ -24,6 +24,11 @@ function getRepoContributors(repoOwner, repoName, callback){
 
 }
 
++function downloadImageByURL(url, filePath) {
+ +  request(url)
+ +    .pipe(fs.createWriteStream(filePath));
+ +}
+
 
 
 
