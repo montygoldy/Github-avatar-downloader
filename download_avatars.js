@@ -1,16 +1,14 @@
 var secrets = require('./secret'); // Requiring secret module containing key
 var request = require('request'); // Request module
 var fs = require('fs');
-var input = process.argv.slice(2);
-var repoOwner = input[0];
-var repoName = input[1];
+
 
 function getRepoContributors(repoOwner, repoName, callback){
   var options = {
-    url: "https://api.github.com/" + repoOwner + "/" + repoName + "/contributors",
-    header: {
+    url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
+    headers: {
       'User-Agent': 'request',
-      'Authorization': GITHUB_TOKEN
+      'Authorization': 'token ' + secrets.GITHUB_TOKEN
     }
   }
 
@@ -18,26 +16,24 @@ function getRepoContributors(repoOwner, repoName, callback){
     if(err){
       throw err;
     }
-    var userData = callback(JSON.parse(body));
-    userData.forEach(function(element){
-      downloadImageByUrl(element.avatar_url, folderPath + element.login + '.jpg');
-    })
+
+    callback(JSON.parse(body));
 
   });
 
 }
 
-function downloadImageByURL(url, filePath) {
-   request(url)
-     .pipe(fs.createWriteStream(filePath));
- }
+
+function callback_function (userData) {
+
+  userData.forEach(function(element){
+
+      console.log(element.avatar_url);
+  })
+}
 
 
 
-
-getRepoContributors("jquery", "jquery", function(err, result) {
-  console.log("Errors: ", err);
-  console.log("Result: ", result);
-});
+getRepoContributors("jquery", "jquery", callback_function);
 
 
