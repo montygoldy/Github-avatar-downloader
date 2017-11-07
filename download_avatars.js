@@ -1,6 +1,9 @@
 var secrets = require('./secret'); // Requiring secret module containing key
 var request = require('request'); // Request module
 var fs = require('fs');
+var input = process.argv.slice(2);
+var repoOwner = input[0];
+var repoName = input[1];
 
 function getRepoContributors(repoOwner, repoName, callback){
   var options = {
