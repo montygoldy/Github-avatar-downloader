@@ -1,4 +1,11 @@
-require('dotenv').config()
+var dotenv = require('dotenv').config() // Require environment
+
+// Error handling for .env
+
+if(!dotenv || process.env.GITHUB_TOKEN === undefined){
+  throw new Error(".env file missing");
+}
+
 var request = require('request'); // Request module
 var fs = require('fs'); // Create write stream is available to use now
 
@@ -10,7 +17,7 @@ var repoName = arg[1];
 
 // Condition to required arguments
 
-if(!repoOwner || !repoName){
+if(!repoOwner || !repoName || arg.length > 2){
 
   console.log("Please enter Repo owner and Repo name");
 
@@ -43,6 +50,14 @@ if(!repoOwner || !repoName){
      request(url)
         .on('error', function(err){
           throw err;
+        })
+
+        .on('response', function(response){
+          console.log("Downloading avatars.....");
+        })
+
+        .on('end', function(){
+          console.log('Download finished');
         })
 
        .pipe(fs.createWriteStream(filePath));
