@@ -6,6 +6,14 @@ if(!dotenv || process.env.GITHUB_TOKEN === undefined){
   throw new Error(".env file missing");
 }
 
+// Check for avaratar folder
+
+var dir = './avatars';
+if(!fs.existsSync(dir)){
+  fs.mkdirSync(dir);
+}
+
+
 var request = require('request'); // Request module
 var fs = require('fs'); // Create write stream is available to use now
 
